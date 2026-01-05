@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: '123'
+      POSTGRES_DB: rails_api_development
+
+  web:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app:cached
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: '123'
+      RAILS_ENV: development
+    command: bundle exec rails server -b 0.0.0.0
+    working_dir: /app
+
+volumes:
+  db-data: null
