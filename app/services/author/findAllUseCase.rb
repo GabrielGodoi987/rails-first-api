@@ -4,6 +4,6 @@ class FindAllUseCase
   end
 
   def execute
-    return @author_repository.find_all
+    @author_repository.find_all
   end
 end
