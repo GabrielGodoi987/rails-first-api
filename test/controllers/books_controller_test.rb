@@ -21,6 +21,12 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
   test "should show book" do
     get book_url(@book), as: :json
     assert_response :success
+
+    # Verify that the book returns correctly
+    json_response = JSON.parse(response.body)
+    assert_equal @book.id, json_response["id"]
+    assert_equal @book.title, json_response["title"]
+    assert_equal @book.rating, json_response["rating"]
   end
 
   test "should update book" do

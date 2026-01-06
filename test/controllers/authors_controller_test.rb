@@ -8,6 +8,13 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     get authors_url, as: :json
     assert_response :success
+
+    # Verifica que retorna um array
+    json_response = JSON.parse(response.body)
+    assert_instance_of Array, json_response
+
+    # Verifica que contém os autores do fixture
+    assert json_response.length >= 2
   end
 
   test "should create author" do
